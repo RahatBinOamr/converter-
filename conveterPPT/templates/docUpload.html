@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document to PPT Converter</title>
-      <style>
+    <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f9;
@@ -15,63 +15,124 @@
         }
 
         .container {
-            width: 60%;
-            margin: 0 auto;
+            width: 70%;
+            margin: 50px auto;
             padding: 20px;
             background-color: #ffffff;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            margin-top: 50px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        h2 {
+        h1 {
             color: #2c3e50;
         }
 
-        p {
-            font-size: 1.1em;
+        .themes {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .theme-card {
+            display: inline-block;
+            margin: 10px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            text-align: center;
+            width: 150px;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-card:hover {
+            transform: scale(1.05);
+        }
+
+        .theme-card h3 {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        .theme-card input[type="radio"] {
+            display: none;
+        }
+
+        .theme-card input[type="radio"]:checked + label {
+            border: 3px solid #3498db;
         }
 
         form {
             margin-top: 20px;
         }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-
-        input[type="file"] {
+        .custom-file-input {
+            display: inline-block;
+            margin: 20px 0;
             padding: 10px;
-            font-size: 1.1em;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .custom-file-input input[type="file"] {
+            display: none;
         }
 
         button {
-            background-color: #3498db;
-            color: white;
             padding: 10px 20px;
-            font-size: 1.2em;
+            background: #3498db;
             border: none;
             border-radius: 5px;
+            color: white;
+            font-size: 18px;
             cursor: pointer;
-            margin-top: 20px;
         }
 
         button:hover {
-            background-color: #2980b9;
+            background: #2980b9;
+        }
+
+        .theme-card label {
+            padding: 10px;
+            display: block;
+            background-color: transparent;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <h1>Upload Document to Convert to PPT</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Upload and Convert</button>
-    </form>
+    <div class="container">
+        <h1>Choose Your Theme & Upload Document</h1>
+
+        <!-- Custom theme selection cards -->
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="themes">
+                {% for theme_name, theme in themes.items %}
+                    <div class="theme-card" style="background-color: rgb{{ theme.bg_color }}; color: white;">
+                        <!-- Hidden radio input for theme selection -->
+                        <input type="radio" id="theme-{{ theme_name }}" name="theme" value="{{ theme_name }}" {% if forloop.first %}checked{% endif %}>
+                        <label for="theme-{{ theme_name }}">
+                            <h3>{{ theme_name|title }} Theme</h3>
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Custom Document Upload -->
+            <div class="custom-file-input">
+                <label for="document">Choose Document</label>
+                <input type="file" id="document" name="document" accept=".docx">
+            </div>
+            
+            <button type="submit">Upload and Convert to PPT</button>
+        </form>
+    </div>
 </body>
 </html>
