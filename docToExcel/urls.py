@@ -23,4 +23,5 @@ urlpatterns = [
     path("",include('converter.urls')),
     path("", include("conveterPPT.urls")),
     path("", include("pdfToDoc.urls")),
+    path("", include("notepad.urls")),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
