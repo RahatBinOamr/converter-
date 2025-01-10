@@ -67,6 +67,7 @@
             text-decoration: none;
             font-weight: bold;
             transition: background 0.3s;
+            width: 100%;
         }
 
         .details-button:hover {
@@ -89,7 +90,7 @@
                     <div class="note-card">
                         <h3>{{ note.title }}</h3>
                         <p>{{ note.content|safe|truncatewords:20 }}</p>
-                        <a href="{% url 'note_details' note.slug %}" class="details-button">📖 Details</a>
+                        <a href="{% url 'note_details' note.slug %}" class="details-button w-100">📖 Details</a>
                     </div>
                 </div>
             {% endif %}

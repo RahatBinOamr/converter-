@@ -89,6 +89,7 @@
     <p>{{ note.content|safe }}</p>
     <a href="{% url 'edit_note' note.slug %}" class="edit-button">✏️ Edit Note</a>
     <a href="{% url 'delete_note' note.slug %}" class="delete-button">❌ Delete Note</a>
+    <a href="{% url 'download_pdf' note.slug %}" class="details-button">📥 Download PDF</a>
     <a href="{% url 'notepad' %}" class="back-button">⬅️ Back to Notes</a>
 </div>
 </body>
